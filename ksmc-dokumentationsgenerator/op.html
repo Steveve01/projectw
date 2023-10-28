@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            overflow-x: hidden;
+        }
+        body::after {
+            content: "";
+            display: block;
+            height: 20px;
+        }
+        .fetter-text {
+            text-decoration: underline;
+        }
+        .custom-button {
+            padding: 35px 20px;
+            background-color: #ff0000;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: xx-large;
+            border-radius: 10px;
+            position: absolute;
+            width: 90%;
+            transform: translate(5%, -100px);
+        }
+        .custom-button:hover {
+            cursor: pointer;
+            cursor: hand;
+            background-color: rgb(65, 65, 65);
+        }
+        .line1 {
+            color: rgb(143, 133, 133);
+            background-color: rgb(143, 133, 133);
+            height: 20px;
+            width: 90%;
+            transform: translate(0%, 350px);
+            border-radius: 10px;
+        }
+        .img {
+            position: absolute;
+            top:125px;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 400px;
+            height: auto;
+        }
+        .input {
+            color: black;
+            background-color: white;
+            width: 30%;
+            height: 37px;
+            font-size: xx-large;
+            border-radius: 10px;
+        }
+        .output {
+            color: black;
+            background-color: white;
+            font-size: xx-large;
+            width: 90%;
+            height: 400px;
+            border-radius: 10px;
+            transform: translate(5%, 50px);
+        }
+        .outputs {
+            transform: translate(0, -1500px);
+        }
+        .textInput {
+            transform: translate(20%, 400px);
+        }
+        .workspace {
+            transform: translate(50%, -1660px);
+        }
+        .afterText {
+            transform: translate(30%, -75px);
+        }
+        .lineMissing {
+            transform: translate(0, -30px);
+        }
+        #input-blut {
+            width: 50px;
+        }
+        #input-verletzung{
+            height: 430px;
+            border-width: 2px;
+            border-color: black;
+        }
+        #blutText {
+            margin-left: 5px;
+            transform: translate(0, -15px);
+        }
+        #blutP {
+            display: flex;
+        }
+        #button-copy {
+            transform: translate(5%, 100px);
+        }
+
+    </style>
+    <title>OP-Bericht | Dokumentationsgenerator</title>
+    <script>
+        
+        function copy() {
+            const outputField = document.getElementById("output-field");
+            outputField.select();
+            outputField.setSelectionRange(0, 99999);
+            document.execCommand("copy");
+            alert("Der Bericht wurde in die Zwischenablage kopiert!");
+        }
+        function verarbeiteEingabe() {
+            var eingabeText = document.getElementById("input-verletzung").value;
+            eingabeText = eingabeText.replace(/<br>/g, '\n');
+            var formatierterText = eingabeText.split('\n').map(function(line) {
+                return "> " + line;
+            }).join('\n');
+            return formatierterText;
+        }
+        function generate() {
+            const patient = document.getElementById("input-patient").value;
+            const diagnose = document.getElementById("input-diagnose").value;
+            const dauer = document.getElementById("input-dauer").value;
+            const verletzungen = verarbeiteEingabe();
+            const larzt = document.getElementById("input-larzt").value;
+            const aarzt = document.getElementById("input-aarzt").value;
+            const datum = document.getElementById("input-date").value;
+            const vtemp = document.getElementById("input-vtemp").value;
+            const vpuls = document.getElementById("input-vpuls").value;
+            const vdruck = document.getElementById("input-vdruck").value;
+            const vstoff = document.getElementById("input-vstoff").value;
+            const ntemp = document.getElementById("input-ntemp").value;
+            const npuls = document.getElementById("input-npuls").value;
+            const ndruck = document.getElementById("input-ndruck").value;
+            const nstoff = document.getElementById("input-nstoff").value;
+            const beginn = document.getElementById("input-beginn").value;
+            const ende = document.getElementById("input-ende").value;
+            const medikamente = document.getElementById("input-medikamente").value;
+            const zimmer = document.getElementById("input-zimmer").value;
+            const bemerkungen = document.getElementById("input-bemerkungen").value;
+            const reportHTML=generateBericht(patient, diagnose, dauer, larzt, aarzt, datum, vtemp, vpuls, vdruck, vstoff, ntemp, npuls, ndruck, nstoff, beginn, verletzungen, ende, medikamente, zimmer, bemerkungen);
+            document.getElementById("output-field").value = reportHTML;
+        }
+        function generateBericht(patient, diagnose, dauer, larzt, aarzt, datum, vtemp, vpuls, vdruck, vstoff, ntemp, npuls, ndruck, nstoff, beginn, verletzungen, ende, medikamente, zimmer, bemerkungen) {
+            return `__**OP-Bericht:**__
+
+Name: ${patient}
+Diagnose: ${diagnose}
+Dauer der OP: ${dauer}
+Leitender Arzt: ${larzt}
+Assistierender Arzt: ${aarzt}
+Datum: ${datum}
+
+**Präoperativ:**
+Körpertemperatur: ${vtemp}
+Puls: ${vpuls}
+Blutdruck: ${vdruck}
+Sauerstoffsättigung: ${vstoff}
+
+**Intraoperativ:**
+Beginn der OP: ${beginn}
+Durchführung: 
+${verletzungen}
+Ende der OP: ${ende}
+Verabreichte Medikamente: ${medikamente}
+
+**Postoperativ:**
+Körpertemperatur: ${ntemp}
+Puls: ${npuls}
+Blutdruck: ${ndruck}
+Sauerstoffsättigung: ${nstoff}
+
+**Sonstiges:**
+Zimmer: ${zimmer}
+Bemerkungen: ${bemerkungen}
+`;
+        }
+    </script>
+</head>
+<body>
+    <div>
+        <img class="img" src="../bilder/KSMC.png" alt="KSMC">
+    </div>
+    <div>
+        <hr class="line1">
+    </div>
+    <div class="textInput">
+        <h1>Patient:</h1>
+        <h1>Diagnose:</h1>
+        <h1>Dauer der OP:</h1>
+        <h1>Leitender Arzt:</h1>
+        <h1>Assistierender Arzt:</h1>
+        <h1>Datum:</h1>
+        <h1><br></h1>
+        <h1><span class="fetter-text">Präoperativ</span></h1>
+        <h1>Körpertemperatur:</h1>
+        <h1>Puls:</h1>
+        <h1>Blutdruck:</h1>
+        <h1>Sauerstoffsättigung:</h1>
+        <h1><br></h1>
+        <h1><span class="fetter-text">Intraoperativ</span></h1>
+        <h1>Beginn:</h1>
+        <h1>Durchführung:</h1>
+        <h1>||</h1>
+        <h1>||</h1>
+        <h1>||</h1>
+        <h1>||</h1>
+        <h1>||</h1>
+        <h1>||</h1>
+        <h1>||</h1>
+        <h1>Ende:</h1>
+        <h1>Verabreichte Medikamente:</h1>
+        <h1><br></h1>
+        <h1><span class="fetter-text">Postoperativ</span></h1>
+        <h1>Körpertemperatur:</h1>
+        <h1>Puls:</h1>
+        <h1>Blutdruck:</h1>
+        <h1>Sauerstoffsättigung:</h1>
+        <h1><br></h1>
+        <h1><span class="fetter-text">Sonstiges</span></h1>
+        <h1>Zimmer:</h1>
+        <h1>Bemerkungen:</h1>
+    </div>
+    <div class="workspace">
+        <p><input class="input" id="input-patient" type="text"></p>
+        <p><input class="input" id="input-diagnose" type="text"></p>
+        <p><input class="input" id="input-dauer" type="text"></p>
+        <p><input class="input" id="input-larzt" type="text"></p>
+        <p><input class="input" id="input-aarzt" type="text"></p>
+        <p><input class="input" type="date" name="input" id="input-date"></p>
+        <p><br><br><br><br><br><br></p>
+        <p><input class="input" id="input-vtemp" type="text"></p>
+        <p><input class="input" id="input-vpuls" type="text"></p>
+        <p><input class="input" id="input-vdruck" type="text"></p>
+        <p><input class="input" id="input-vstoff" type="text"></p>
+        <p><br><br><br><br><br><br></p>
+        <p><input class="input" type="time"  id="input-beginn"></p>
+        <p><textarea name="" class="input" id="input-verletzung" cols="30" rows="10"></textarea></p>
+        <p><input class="input" type="time"  id="input-ende"></p>
+        <p><input class="input" type="text" id="input-medikamente"></p>
+        <p><br><br><br><br><br><br></p>
+        <p><input class="input" id="input-ntemp" type="text"></p>
+        <p><input class="input" id="input-npuls" type="text"></p>
+        <p><input class="input" id="input-ndruck" type="text"></p>
+        <p><input class="input" id="input-nstoff" type="text"></p>
+        <p><br><br><br><br><br></p>
+        <p><input class="input" id="input-zimmer" type="text"></p>
+        <p><input class="input" id="input-bemerkungen" type="text"></p>
+        </div>
+    <div class="outputs">
+        <p><button class="custom-button" id="button-generate" onclick="generate()">Generieren</button></p>
+        <p><textarea class="output" id="output-field" rows="20" cols="80" readonly></textarea></p>
+        <p><button class="custom-button" id="button-copy" onclick="copy()">Kopieren</button></p>
+    </div>
+</body>
+</html>

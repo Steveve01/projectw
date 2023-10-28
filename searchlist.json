@@ -1,0 +1,16 @@
+{
+    "ids": [
+      {
+        "id": "id1",
+        "thema": "Thema 1",
+        "titel": "Titel 1",
+        "suchbegriffe": ["begriff1", "begriff2","bg5"]
+      },
+      {
+        "id": "id2",
+        "thema": "Thema 2",
+        "titel": "Titel 2",
+        "suchbegriffe": ["begriff3", "begriff4","bg5"]
+      }
+    ]
+  }

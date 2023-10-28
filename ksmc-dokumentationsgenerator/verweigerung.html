@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            overflow-x: hidden;
+        }
+        body::after {
+            content: "";
+            display: block;
+            height: 20px;
+        }
+        .custom-button {
+            padding: 35px 20px;
+            background-color: #ff0000;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: xx-large;
+            border-radius: 10px;
+            position: absolute;
+            width: 90%;
+            transform: translate(5%, -100px);
+        }
+        .custom-button:hover {
+            cursor: pointer;
+            cursor: hand;
+            background-color: rgb(65, 65, 65);
+        }
+        .line1 {
+            color: rgb(143, 133, 133);
+            background-color: rgb(143, 133, 133);
+            height: 20px;
+            width: 90%;
+            transform: translate(0%, 350px);
+            border-radius: 10px;
+        }
+        .img {
+            position: absolute;
+            top:125px;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 400px;
+            height: auto;
+        }
+        .input {
+            color: black;
+            background-color: white;
+            width: 30%;
+            height: 40px;
+            font-size: xx-large;
+            border-radius: 10px;
+        }
+        .output {
+            color: black;
+            background-color: white;
+            font-size: xx-large;
+            width: 90%;
+            height: 400px;
+            border-radius: 10px;
+            transform: translate(5%, 50px);
+		  }
+        .textInput {
+            transform: translate(20%,400px);
+        }
+        .workspace {
+            transform: translate(50%, 155px);
+        }
+        .afterText {
+            transform: translate(30%, -75px);
+        }
+        .lineMissing {
+            transform: translate(0, -30px);
+        }
+        .outputs {
+            transform: translate(0, 300px);
+        }
+        #input-blut {
+            width: 50px;
+        }
+        #input-date {
+            width: 20%;
+        }
+        #input-time {
+            width: 10%;
+        }
+        #blutText {
+            margin-left: 5px;
+            transform: translate(0, -15px);
+        }
+        #blutP {
+            display: flex;
+        }
+        #button-copy {
+            transform: translate(5%, 100px);
+        }
+
+    </style>
+    <title>Verweigerung | Dokumentationsgenerator</title>
+    <script>
+        
+        function copy() {
+            const outputField = document.getElementById("output-field");
+            outputField.select();
+            outputField.setSelectionRange(0, 99999);
+            document.execCommand("copy");
+            alert("Der Bericht wurde in die Zwischenablage kopiert!");
+        }
+        function generate() {
+            const patient = document.getElementById("input-patient").value;
+            const verletzungen = document.getElementById("input-verletzung").value;
+            const datum = document.getElementById("input-date").value;
+            const zeit = document.getElementById("input-time").value;
+            const arzt = document.getElementById("input-arzt").value;
+            const reportHTML=generateBericht(patient, verletzungen, datum, zeit, arzt);
+            document.getElementById("output-field").value = reportHTML;
+        }
+        function generateBericht(patient, verletzungen, datum, zeit, arzt) {
+            return `__**Behandlungsverweigerung:**__
+
+Patient: ${patient}
+Hiermit erkläre ich, dass ich heute, am ${datum} um ${zeit} von ${arzt} über meine Erkrankung bzw. Verletzung und deren Konsequenzen aufgeklärt worden bin und eine Behandlung und / oder Beförderung in ein Krankenhaus entgegen der Belehrung ablehne.
+
+Für hieraus entstandene Schäden trage ich selbst die Verantwortung. Ich wurde darüber informiert, dass ich späterhin keinerlei Ersatzansprüche wegen dieser nicht ausgeführten Behandlung und den sich evtl. daraus ergebenden gesundheitlichen Schäden geltend machen kann.
+
+Der/Die unterzeichnende Arzt/Ärztin hat mir ausführlich erklärt, und ich habe verstanden, dass und warum folgende Untersuchungen und / oder Behandlungen medizinisch erforderlich bzw. dringend sind:
+${verletzungen}
+
+Ich lehne die empfohlenen notwendigen / dringlichen ärztlichen Maßnahmen aus freiem Entschluss und gegen den eindringlichen Rat des Arztes ab.
+
+Mir ist bewusst, dass ich jederzeit, insofern die dafür benötigten medizinischen Kräfte verfügbar und im Dienst sind, zurückkommen kann.
+
+Unterschrift des Arztes/Rettungssanitäters:
+
+
+Unterschrift des Patienten:
+`;
+        }
+    </script>
+</head>
+<body>
+    <div>
+        <img class="img" src="../bilder/KSMC.png" alt="KSMC">
+    </div>
+    <div>
+        <hr class="line1">
+    </div>
+    <div class="textInput">
+        <h1>Name:</h1>
+		  <h1>Datum, Zeit:</h1>
+        <h1>Diagnose:</h1>
+        <h1>Behandelner Arzt:</h1>
+    </div>
+    <div class="workspace">
+        <p><input class="input" id="input-patient" type="text"></p>
+		  <p><input class="input" type="date" name="input" id="input-date"><input class="input" id="input-time" type="time"></p>
+        <p><input class="input" id="input-verletzung" type="text"></p>
+        <p><input class="input" id="input-arzt" type="text"></p>
+        </div>
+<div class="outputs">
+    <p><button class="custom-button" id="button-generate" onclick="generate()">Generieren</button></p>
+    <p><textarea class="output" id="output-field" rows="20" cols="80" readonly></textarea></p>
+    <p><button class="custom-button" id="button-copy" onclick="copy()">Kopieren</button></p>
+</div>
+</body>
+</html>

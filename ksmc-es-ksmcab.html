@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .img {
+            position: absolute;
+            top: 150px;;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60%;
+            height: auto;
+        }
+        .line1 {
+            color: rgb(143, 133, 133);
+            background-color: rgb(143, 133, 133);
+            height: 20px;
+            width: 90%;
+            transform: translate(5%, 350px);
+            border-radius: 10px;
+        }
+        .line2 {
+            color: rgb(143, 133, 133);
+            background-color: rgb(143, 133, 133);
+            height: 20px;
+            width: 90%;
+            transform: translate(5%, 400px);
+            border-radius: 10px;
+        }
+        .input {
+            color: rgb(143, 133, 133);
+            background-color: white;
+            width: 30%;
+            transform: translate(62.5%, 350px);
+            font-size: xx-large;
+            border-radius: 10px;
+        }
+        .button {
+            padding: 35px 20px;
+            background-color: #ff0000;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: xx-large;
+            border-radius: 10px;
+            transform: translate(calc(50% + 300px), 350px);
+        }
+        .button:hover {
+            cursor: pointer;
+            cursor: hand;
+            background-color: rgb(65, 65, 65);
+        }
+        .ergebnis {
+            color: white;
+            background-color: red;
+            font-size: xx-large;
+            border-radius: 10px;
+            width: 80%;
+            transform: translate(10%, 500px);
+            text-align: center;
+            
+        }
+        #ergebnis a {
+            text-decoration: none; /* Entfernt die Unterstreichung */
+            color: inherit; /* Verwendet die Schriftfarbe des umgebenden Elements (weiß) */
+        }
+        #ergebnis .ergebnis-element {
+            margin-bottom: 20px; /* Setze hier den gewünschten Abstand in Pixeln ein */
+        }
+        body::after {
+            content: "";
+            display: block;
+            height: 20px;
+        }
+    </style>
+    <title>KSMC | Education System | KSMC Ausbildung</title>
+</head>
+<body>
+    <div class="content" id="meinElement">
+        <img class="img" src="bilder\KSMC-Education-System.png" alt="KSMC|Education-System">
+        <p class="line1">
+        <div>
+            <input class="input" id="input" type="text" placeholder="Inhalt suchen">
+            <button onclick="search()" class="button">Suche starten</button>
+        </div>
+        <p class="line2">
+            <div class="ergebnis" id="ergebnis">
+                <!-- Hier werden die Ergebnisse dynamisch eingefügt -->
+            </div>
+    </div>
+    <script>
+        var meinElement = document.getElementById("meinElement");
+        var urspruenglichesDisplay = meinElement.style.display;
+        
+        function search() {
+            var eingabe = document.getElementById("input").value;
+            console.log(eingabe);
+
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.open('GET', 'searchlist.json', true);
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState === 4 && this.status === 200) {
+                    var searchList = JSON.parse(this.responseText);
+
+                    // Durchsuche die IDs nach Übereinstimmungen mit den Suchbegriffen
+                    var passendeIds = [];
+                    for (var i = 0; i < searchList.ids.length; i++) {
+                        var idData = searchList.ids[i];
+                        for (var j = 0; j < idData.suchbegriffe.length; j++) {
+                            var suchbegriff = idData.suchbegriffe[j].toLowerCase();
+                            if (suchbegriff.includes(eingabe)) {
+                                passendeIds.push(idData.id);
+                                break;
+                            }
+                        }
+                    }
+
+                    // Anzeige der gefundenen Titel als anklickbare Links auf der Webseite
+                    var ergebnisDiv = document.getElementById("ergebnis");
+                    ergebnisDiv.innerHTML = ""; // Vorherige Ergebnisse löschen
+                    console.log(passendeIds);
+                    if (passendeIds.length == 0)  {
+                var ergebnisElement = document.createElement("div");
+                var link = document.createElement("a");
+                link.textContent = "Keine Ergebnisse";
+                ergebnisElement.appendChild(link);
+                ergebnisDiv.appendChild(ergebnisElement);
+            } else {
+                    for (var k = 0; k < passendeIds.length; k++) {
+                        var id = passendeIds[k];
+                        var idData = searchList.ids.find(function(item) {
+                            return item.id === id;
+                        });
+                        var titel = idData.titel;
+                        var titelLink = document.createElement("a");
+                        titelLink.textContent = titel;
+                        titelLink.href = "ksmc-es-ksmcab/" + id + ".html";
+                        var ergebnisElement = document.createElement("div");
+                        ergebnisElement.className = "ergebnis-element";
+                        ergebnisElement.style.display = "block";
+                        ergebnisElement.style.marginBottom = "20px";
+                        ergebnisElement.style.textDecoration = "none";
+                        ergebnisElement.style.color = "white";
+                        ergebnisElement.style.backgroundColor = "red";
+                        ergebnisElement.style.fontSize = "xx-large";
+                        ergebnisElement.style.borderRadius = "10px";
+                        ergebnisElement.style.padding = "10px";
+                        ergebnisElement.appendChild(titelLink);
+                        ergebnisDiv.appendChild(ergebnisElement);
+                    }
+                }
+            }
+            };
+            xmlhttp.send();
+        }
+
+        /*function showResults(passendeIds) {
+            var ergebnisDiv = document.getElementById("ergebnis");
+            ergebnisDiv.innerHTML = ""; // Leert das Ergebnis-Div, um vorherige Ergebnisse zu entfernen
+
+            if (passendeIds == null)  {
+                var ergebnisElement = document.createElement("div");
+                var link = document.createElement("a");
+                link.textContent = "Keine Ergebnisse";
+                ergebnisElement.appendChild(link);
+                ergebnisDiv.appendChild(ergebnisElement);
+            } else {
+
+            for (var i = 0; i < passendeIds.length; i++) {
+                var id = passendeIds[i];
+                var ergebnisElement = document.createElement("div");
+                ergebnisElement.className = "ergebnis-element";
+
+                var link = document.createElement("a");
+                link.href = "ksmc-es-ksmcab/" + id + ".html"; // Passe hier den Pfad zu deinen Dateien an
+                link.textContent = id; // Hier könntest du den Titel statt der ID einfügen, wenn du möchtest
+                ergebnisElement.style.display = "block";
+                ergebnisElement.style.marginBottom = "20px";
+                ergebnisElement.style.textDecoration = "none";
+                ergebnisElement.style.color = "white";
+                ergebnisElement.style.backgroundColor = "red";
+                ergebnisElement.style.fontSize = "xx-large";
+                ergebnisElement.style.borderRadius = "10px";
+                ergebnisElement.style.padding = "10px";
+                ergebnisElement.appendChild(link);
+                ergebnisDiv.appendChild(ergebnisElement);
+            }
+        }
+    }*/
+
+        window.addEventListener('resize', function() {
+            var windowWidth = window.innerWidth;
+            console.log(windowWidth);
+            if (windowWidth < 950) { // 950 bei Bedarf ändern
+                meinElement.style.display = "none";
+            } else {
+                meinElement.style.display = urspruenglichesDisplay;
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .custom-button {
+            padding: 10px 20px;
+            background-color: #ff0000;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .custom-button:hover {
+            cursor: pointer;
+            cursor: hand;
+        }
+    </style>
+    <title>Steveve-Studio</title>
+    <script>
+        async function hashPassword(password) {
+            const encoder = new TextEncoder();
+            const data = encoder.encode(password);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            const hashHex = hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
+            return hashHex;
+        }
+
+        async function save() {
+            const sname = document.getElementById("name").value;
+            const spassword = document.getElementById("password").value;
+
+            try {
+                const response = await fetch('ksmc-daten/user.json');
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch user data. Status: ${response.status}`);
+                }
+
+                const searchList = await response.json();
+                const userIndex = searchList.user.findIndex(user => user.name === sname);
+
+                if (userIndex !== -1) {
+                    alert("Nutzer gefunden " + searchList.user[userIndex].name);
+                    const hashedPassword = await hashPassword(spassword);
+                    searchList.user[userIndex].passwort = hashedPassword;
+                    alert(searchList.user[userIndex].passwort);
+
+                    await saveUpdatedSearchList(searchList);
+                }
+            } catch (error) {
+                console.error('Error:', error.message);
+            }
+        }
+
+        async function saveUpdatedSearchList(updatedSearchList) {
+            try {
+                const response = await fetch('ksmc-daten/user.json', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json;charset=UTF-8',
+                    },
+                    body: JSON.stringify({ user: updatedSearchList.user }), // Nur den aktualisierten Benutzer senden
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Failed to update user data. Status: ${response.status}`);
+                }
+
+                console.log('Die JSON-Datei wurde erfolgreich aktualisiert.');
+            } catch (error) {
+                console.error('Error:', error.message);
+            }
+        }
+    </script>
+</head>
+<body>
+    <div>
+        <p><input type="text" id="name" value="Name"></p>
+        <p><input type="text" id="password" value="Password"></p>
+        <p><button onclick="save()" class="custom-button">Save</button></p>
+    </div>
+</body>
+</html>

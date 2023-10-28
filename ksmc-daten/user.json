@@ -1,0 +1,28 @@
+{
+    "user": [
+      {
+        "id": "0",
+        "name": "Alexander Miller",
+        "rang": "Facharzt",
+        "dienstnummer": "104",
+        "spitzname": "Steveve01",
+        "geburtsdatum": "07.10.2004",
+        "email": "alexander.millerjahollde@gmail.com",
+        "telefon": "0811549857",
+        "kontonummer": "1189",
+        "passwort": "Hi"
+      },
+      {
+        "id": "1",
+        "name": "Ruby Osaka",
+        "rang": "Chefarzt",
+        "dienstnummer": "155",
+        "spitzname": "xRuby_x",
+        "geburtsdatum": "30.05.2003",
+        "email": "osakaruby@gmail.com",
+        "telefon": "0811286109",
+        "kontonummer": "1091",
+        "passwort": ""
+      }
+    ]
+  }

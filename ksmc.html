@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .button-container {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            gap: 10px;
+            transform: translate(0%, 400px);
+        }
+        .line1 {
+            color: rgb(143, 133, 133);
+            background-color: rgb(143, 133, 133);
+            height: 20px;
+            width: 90%;
+            transform: translate(0%, 350px);
+            border-radius: 10px;
+        }
+        .line2 {
+            color: rgb(143, 133, 133);
+            background-color: rgb(143, 133, 133);
+            height: 20px;
+            width: 90%;
+            transform: translate(0%, 3400%);
+            border-radius: 10px;
+        }
+        .img {
+            position: absolute;
+            top:125px;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 400px;
+            height: auto;
+        }
+        .custom-button {
+            padding: 35px 20px;
+            background-color: #ff0000;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: xx-large;
+            border-radius: 10px;
+        }
+        .custom-button:hover {
+            cursor: pointer;
+            cursor: hand;
+            background-color: rgb(65, 65, 65);
+        }
+        .input {
+            color: black;
+            background-color: white;
+            width: 55%;
+            height: 60px;
+            font-size: xx-large;
+            border-radius: 10px;
+        }
+        .z0 {
+            z-index: 1;
+        }
+        .authentication {
+            z-index: 2;
+            position: relative;
+            
+        }
+        #white-box {
+            transform: translate(49%, 0);
+            background-color: white;
+            height: 400px; /* Ändere die Höhe nach Bedarf */
+            width: 50%; /* Vollständige Breite des Bildschirms */
+            border-radius: 10px;
+            border: 4px solid black;
+        }
+        #auth-name {
+            position: relative;
+            left: 22.5%;
+        }
+        #auth-password {
+            position: relative;
+            left: 22.5%;
+        }
+        #auth-submit {
+            position: relative;
+            left: 22.5%;
+        }
+    </style>
+    <script>
+        async function hashPassword(password) {
+            const encoder = new TextEncoder();
+            const data = encoder.encode(password);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            const hashHex = hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
+            return hashHex;
+        }
+    
+        function directES() {
+            window.location.href = "ksmc-education-system.html";
+        }
+    
+        function directDG() {
+            window.location.href = "ksmc-dokumentationsgenerator.html";
+        }
+    
+        async function authSubmit() {
+            const entName = document.getElementById("auth-name").value;
+            const entPassword = document.getElementById("auth-password").value;
+
+            try {
+                const response = await fetch('ksmc-daten/user.json');
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch user data. Status: ${response.status}`);
+                }
+
+                const searchList = await response.json();
+                const user = searchList.user.find(user => user.name === entName);
+
+                if (user) {
+                    const hashedPassword = await hashPassword(entPassword);
+
+                    console.log('Entered Password:', entPassword);
+                    console.log('Hashed Password:', hashedPassword);
+                    console.log('Stored Password:', user.passwort);
+
+                    if (hashedPassword === user.passwort) {
+                        alert("Erfolgreich Angemeldet");
+                    } else {
+                        alert("Falsches Passwort");
+                    }
+                } else {
+                    alert("Falscher Name");
+                }
+            } catch (error) {
+                console.error('Error:', error.message);
+            }
+        }
+    </script>
+    <title>KSMC</title>
+</head>
+<body>
+    <div>
+        <img class="img" src="bilder\KSMC.png" alt="KSMC">
+    </div>
+    <div class="z0">
+        <hr class="line1">
+        <hr class="line2">
+    </div>
+    <div class="button-container"  class="z0">
+        <button onclick="directES()" class="custom-button">Education System</button>
+        <button onclick="directDG()" class="custom-button">Dokumentationsgenerator</button>
+    </div>
+    <div class="authentication">
+        <div id="white-box">
+            <br><br>
+            <p><h1 style="text-align: center;">Einloggen:</h1></p>
+            <p><input type="text" class="input" id="auth-name" value="Name"></p>
+            <p><input type="password" class="input" id="auth-password" value="Passwort"></p>
+            <p><button onclick="authSubmit()" class="input" id="auth-submit">Bestätigen</button></p>
+        </div>
+        
+    </div>
+</body>
+</html>

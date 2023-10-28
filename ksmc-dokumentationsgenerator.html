@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            overflow-x: hidden;
+        }
+        body::after {
+            content: "";
+            display: block;
+            height: 20px;
+        }
+        .button-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            transform: translate(2%, 400px);
+        }
+        .line1 {
+            color: rgb(143, 133, 133);
+            background-color: rgb(143, 133, 133);
+            height: 20px;
+            width: 90%;
+            transform: translate(0%, 350px);
+            border-radius: 10px;
+        }
+        .img {
+            position: absolute;
+            top:125px;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 400px;
+            height: auto;
+        }
+        .custom-button {
+            padding: 35px 20px;
+            width: 85%;
+            height: 200px;
+            background-color: #ff0000;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: xx-large;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .custom-button:hover {
+            cursor: pointer;
+            cursor: hand;
+            background-color: rgb(65, 65, 65);
+        }
+        .icon {
+            color: white;
+            width:50px;
+            height: 50px;
+        }
+    </style> 
+    <script>
+        function behandlung() {
+            window.location.href = "ksmc-dokumentationsgenerator/behandlung.html";
+        }
+        function diagnose() {
+            window.location.href = "ksmc-dokumentationsgenerator/diagnose.html";
+        }
+        function op() {
+            window.location.href = "ksmc-dokumentationsgenerator/op.html";
+        }
+        function medikamentengabe() {
+            window.location.href = "ksmc-dokumentationsgenerator/medikamentengabe.html";
+        }
+        function schusswunden() {
+            window.location.href = "ksmc-dokumentationsgenerator/schusswunden.html";
+        }
+        function laborauftrag() {
+            window.location.href = "ksmc-dokumentationsgenerator/laborauftrag.html";
+        }
+        function laborergebnis() {
+            window.location.href = "ksmc-dokumentationsgenerator/laborergebnis.html";
+        }
+        function totenscheine() {
+            window.location.href = "ksmc-dokumentationsgenerator/totenscheine.html";
+        }
+        function pathologie() {
+            window.location.href = "ksmc-dokumentationsgenerator/pathologie.html";
+        }
+        function rezept() {
+            window.location.href = "ksmc-dokumentationsgenerator/rezept.html";
+        }
+        function arbeitsunfaehigkeitsbescheinigung() {
+            window.location.href = "ksmc-dokumentationsgenerator/krankschreiben.html";
+        }
+        function verweigerung() {
+            window.location.href = "ksmc-dokumentationsgenerator/verweigerung.html";
+        }        
+        function blutspende() {
+            window.location.href = "ksmc-dokumentationsgenerator/blutspende.html";
+        }
+        function urlaub() {
+            window.location.href = "ksmc-dokumentationsgenerator/urlaub.html";
+        }
+    </script>
+    <title>KSMC | Dokumentationsgenerator</title>
+</head>
+<body>
+    <div>
+        <img class="img" src="bilder\KSMC.png" alt="KSMC">
+    </div>
+    <div>
+        <hr class="line1">
+    </div>
+    <div class="button-container"> <!--14 Buttons 4 pro Zeile-->
+        <button onclick="behandlung()" class="custom-button" id="button-behandlung">
+            <img class="icon" src="bilder/behandlung.png" alt="">
+            </br>
+            Behandlung
+        </button>
+        <button onclick="diagnose()" class="custom-button" id="button-diagnose">
+            <img class="icon" src="bilder/diagnose.png" alt="">
+            </br>
+            Diagnose
+        </button>
+        <button onclick="op()" class="custom-button" id="button-op-bericht">
+            <img class="icon" src="bilder/op-bericht.png" alt="">
+            </br>
+            OP-Bericht
+        </button>
+        <button onclick="medikamentengabe()" class="custom-button" id="button-medikamenten-gabe">
+            <img class="icon" src="bilder/medikamenten-gabe.png" alt="">
+            </br>
+            Medikamenten-gabe
+        </button>
+        <button onclick="schusswunden()" class="custom-button" id="button-schusswunden">
+            <img class="icon" src="bilder/schsswunden.png" alt="">
+            </br>
+            Schusswunden
+        </button>
+        <button onclick="laborauftrag()" class="custom-button" id="button-laborauftrag">
+            <img class="icon" src="bilder/labor.png" alt="">
+            </br>
+            Laborauftrag
+        </button>
+        <button onclick="laborergebnis()" class="custom-button" id="button-laborergebnis">
+            <img class="icon" src="bilder/labor.png" alt="">
+            </br>
+            Laborergebnis
+        </button>
+        <button onclick="totenscheine()" class="custom-button" id="button-totenscheine">
+            <img class="icon" src="bilder/pathologie.png" alt="">
+            </br>
+            Totenscheine
+        </button>
+        <button onclick="pathologie()" class="custom-button" id="button-pathologie">
+            <img class="icon" src="bilder/pathologie.png" alt="">
+            </br>
+            Pathologie
+        </button>
+        <button onclick="rezept()" class="custom-button" id="button-rezept">
+            <img class="icon" src="bilder/bescheinigung.png" alt="">
+            </br>
+            Rezept
+        </button>
+        <button onclick="arbeitsunfaehigkeitsbescheinigung()" class="custom-button" id="button-arbeitsunfaehigkeitsbescheinigung">
+            <img class="icon" src="bilder/bescheinigung.png" alt="">
+            </br>
+            Arbeitsunfähig</br>keitsbeschein</br>igung
+        </button>
+        <button onclick="verweigerung()" class="custom-button" id="button-verweigerung">
+            <img class="icon" src="bilder/bescheinigung.png" alt="">
+            </br>
+            Verweigerungen
+        </button>
+        <button onclick="blutspende()" class="custom-button" id="button-blutspende">
+            <img class="icon" src="bilder/blut.png" alt="">
+            </br>
+            Blutspende
+        </button>
+        <button onclick="urlaub()" class="custom-button" id="button-urlaub-abmeldung">
+            <img class="icon" src="bilder/urlaub.png" alt="">
+            </br>
+            Urlaub-Abmeldung
+        </button>
+    </div>
+</body>
+</html>

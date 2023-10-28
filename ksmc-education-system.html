@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .text {
+            
+            font-size: calc(5px + 2vw);
+            width: 90%;
+            transform: translate(5%, 350px);
+        }
+        .button-container {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            gap: 10px;
+            transform: translate(0%, 500px);
+        }
+        .line1 {
+            color: rgb(143, 133, 133);
+            background-color: rgb(143, 133, 133);
+            height: 20px;
+            width: 90%;
+            transform: translate(0%, 350px);
+            border-radius: 10px;
+        }
+        .line2 {
+            color: rgb(143, 133, 133);
+            background-color: rgb(143, 133, 133);
+            height: 20px;
+            width: 90%;
+            transform: translate(0%, 3500%);
+            border-radius: 10px;
+        }
+        .line3 {
+            color: rgb(143, 133, 133);
+            background-color: rgb(143, 133, 133);
+            height: 20px;
+            width: 90%;
+            transform: translate(0%, 6750%);
+            border-radius: 10px;
+        }
+        .img {
+            position: absolute;
+            top: 150px;;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 1000px;
+            height: auto;
+        }
+        .custom-button {
+            padding: 35px 20px;
+            background-color: #ff0000;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: xx-large;
+            border-radius: 10px;
+        }
+        .custom-button:hover {
+            cursor: pointer;
+            cursor: hand;
+            background-color: rgb(65, 65, 65);
+        }
+    </style>
+    <script>
+        function directKSMCAB() {
+            window.location.href = "ksmc-es-ksmcab.html";
+        }
+        function directDG() {
+            window.location.href = "ksmc-dokumentationsgenerator.html";
+        }
+    </script>
+    <title>KSMC | Education System</title>
+</head>
+<body>
+    <img class="img" src="bilder\KSMC-Education-System.png" alt="KSMC|Education-System">
+    <hr class="line1">
+    <hr class="line2">
+    <hr class="line3" >
+    <h1 class="text" style="text-align: center;">Willkommen beim KSMC Education System!
+        Dieses System dient der Ausbildung von Mitarbeitern des Kryo State Medical Center und medizinisch interessierten Personen. Das System befasst sich somit mit KSMC speizifischen Inhalten, welche passwortgeschützt sind, sowie medizinischen Inhalten für Humanmedizin. Zu beiden Inhalten kann man sich Wissen aneignen und sich in einem Quiz herausfordern.</h1>
+    <div class="button-container">
+        <button onclick="directKSMCAB()" class="custom-button">KSMC Ausbildung</button>
+        <button onclick="directKSMCQZ()" class="custom-button">KSMC Quiz</button>
+        <button onclick="directMediWS()" class="custom-button">Medizinisches Wissen</button>
+        <button onclick="directMediQZ()" class="custom-button">Medizinisches Quiz</button>
+    </div>
+</body>
+</html>
